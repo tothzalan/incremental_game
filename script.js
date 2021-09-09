@@ -18,7 +18,13 @@ setInterval(() => {
     changeText()
 }, 1000)
 
+let cookieImage = false;
 const getCookie = () => {
+    if(cookieImage)
+        document.getElementById("cookieImage").src = "img/cookie.png"
+    else
+        document.getElementById("cookieImage").src = "img/cookie2.png"
+    cookieImage = !cookieImage
     cookies += 1 
     changeText()
 }
@@ -28,7 +34,7 @@ const changeText = () => {
     cPsText = document.getElementById("cookiesPerSec")
 
     numberText.innerHTML = `you have ${cookies.toFixed(2)} cookies`
-    cPsText.innerHTML = `cookies / second: ${cps}`
+    cPsText.innerHTML = `cookies / second: ${cps.toFixed(2)}`
 
     if(cookies >= fingerPrice)
         document.getElementById("fingerUpgrade").style = "background-color: gray"
