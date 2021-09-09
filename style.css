@@ -1,0 +1,40 @@
+html, main {
+    margin: 0;
+    display: block;
+    font-family: monospace;
+}
+main {
+    width: 70vw;
+    margin: 0 auto;
+}
+.mainText {
+    text-align: center;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+.mainButton {
+    text-align: center;
+    margin: 10px;
+}
+.mainButton button {
+    height: 32px;
+}
+.upgradeBar {
+    width: 50vw;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+.upgradeItem {
+    background-color: rgb(90,90,90);
+    padding: 10px;
+    border-radius: 12px;
+}
+
+@media screen and (max-width: 1100px) {
+   .upgradeBar {
+       grid-template-columns: 1fr;
+   } 
+}

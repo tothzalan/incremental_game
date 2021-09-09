@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie clicker</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1 class="mainText">cookie clicker</h1>
+        <h3 id="numberOfCookies">you have 0.00 cookies</h3>
+        <h3 id="cookiesPerSec">cookies / second: 0</h3>
+        <div class="mainButton">
+            <button onclick="getCookie()">get cookie</button>
+        </div>
+    </main>
+    <div class="upgradeBar">
+        <div id="fingerUpgrade" class="upgradeItem">
+            <p class="name">finger</p>
+            <p id="fingerPrice" class="price">price: 15</p>
+            <p class="desc">autoclicks every 5 seconds.</p>
+            <p id="fingerOwned" class="owned">owned: 0</p>
+            <button onclick="buyFinger()">Buy</button>
+        </div>
+        <div id="grandmaUpgrade" class="upgradeItem">
+            <p class="name">grandma</p>
+            <p id="grandmaPrice" class="price">price: 100</p>
+            <p class="desc">1 cookie / second</p>
+            <p id="grandmaOwned" class="owned">owned: 0</p>
+            <button onclick="buyGrandma()">Buy</button>
+        </div>
+        <div id="factoryUpgrade" class="upgradeItem">
+            <p class="name">factory</p>
+            <p id="factoryPrice" class="price">price: 1000</p>
+            <p class="desc">produces cookies in large quantities.</p>
+            <p id="factoryOwned" class="owned">owned: 0</p>
+            <button onclick="buyFactory()">Buy</button>
+        </div>
+        <div id="alchemyUpgrade" class="upgradeItem">
+            <p class="name">alchemy</p>
+            <p id="alchemyPrice" class="price">price: 50000</p>
+            <p class="desc">turns gold into cookies.</p>
+            <p id="alchemyOwned" class="owned">owned: 0</p>
+            <button onclick="buyAlchemy()">Buy</button>
+        </div>
+    </div>
+</body>
+</html>
