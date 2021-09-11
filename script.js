@@ -26,17 +26,56 @@ class Upgrade {
     set owned(owned) {
         this._owned = owned
     }
+    fromJSON(obj) {
+        this._name = obj._name
+        this._price = obj._price
+        this._description = obj._description
+        this._owned = obj._owned
+    }
 }
 
-let upgrades = [new Upgrade("finger", 15, "autoclicks"), new Upgrade("grandma", 100, "bakes cookies"),
-new Upgrade("factory", 1000, "produces cookies in large quantities"), new Upgrade("alchemy", 50000, "turns gold into cookies")]
+class Session {
+    constructor(cookies, cps, upgrades) {
+        this._cookies = cookies
+        this._cps = cps
+        this._upgrades = upgrades
+    }
+    get cookies() {
+        return this._cookies
+    }
+    set cookies(cookies) {
+        this._cookies = cookies
+    }
+    get cps() {
+        return this._cps
+    }
+    set cps(cps) {
+        this._cps = cps
+    }
+    get upgrades() {
+        return this._upgrades
+    }
+    set upgrades(upgrades) {
+        this._upgrades = upgrades
+    }
+    fromJSON(obj) {
+        this._cookies = obj._cookies
+        this._cps = obj._cps
+        this._upgrades = obj._upgrades
+    }
+}
 
+let session = new Session(0, 0, [new Upgrade("finger", 15, "autoclicks"), new Upgrade("grandma", 100, "bakes cookies"),
+    new Upgrade("factory", 1000, "produces cookies in large quantities"), new Upgrade("alchemy", 50000, "turns gold into cookies")])
 
-let cookies = 0
-let cps = 0
+window.onload = () => {
+    session.upgrades.forEach(element => {
+        createUpgrades(element)
+    })
+}
 
 setInterval(() => {
-    cookies += cps
+    session.cookies += session.cps
     changeText()
 }, 1000)
 
@@ -47,7 +86,7 @@ const getCookie = () => {
     else
         document.getElementById("cookieImage").src = "img/cookie2.png"
     cookieImage = !cookieImage
-    cookies += 1
+    session.cookies += 1
     changeText()
 }
 
@@ -55,27 +94,31 @@ const changeText = () => {
     numberText = document.getElementById("numberOfCookies")
     cPsText = document.getElementById("cookiesPerSec")
 
-    numberText.innerHTML = `you have ${cookies.toFixed(2)} cookies`
-    cPsText.innerHTML = `cookies / second: ${cps.toFixed(2)}`
+    numberText.innerHTML = `you have ${session.cookies.toFixed(2)} cookies`
+    cPsText.innerHTML = `cookies / second: ${session.cps.toFixed(2)}`
 
-    upgrades.forEach(obj => {
-        if(cookies >= obj.price)
+    session.upgrades.forEach(obj => {
+        document.getElementById(`${obj.name}Price`).innerHTML = `price: ${obj.price}`
+        document.getElementById(`${obj.name}Owned`).innerHTML = `owned: ${obj.owned}`
+        if (session.cookies >= obj.price)
             document.getElementById(`${obj.name}Upgrade`).style = "background-color: gray"
     })
 }
 
-
-
-const buyAction = (obj) => {
-    if (cookies > obj.price) {
-        cookies -= obj.price
-        obj.price = Math.ceil(obj.price * 2.5)
-        obj.owned += 1
-        cps += obj.price / 10
-        document.getElementById(`${obj.name}Owned`).innerHTML = `owned: ${obj.owned}`
-        document.getElementById(`${obj.name}Price`).innerHTML = `price: ${obj.price}`
-        document.getElementById(`${obj.name}Upgrade`).style = "background-color: rgb(90,90,90)"
-    }
+const buyAction = (objName) => {
+    session.upgrades.forEach(obj => {
+        if(obj.name == objName) {
+            if (session.cookies > obj.price) {
+                session.cookies -= obj.price
+                obj.price = Math.ceil(obj.price * 2.5)
+                obj.owned += 1
+                session.cps += obj.price / 10
+                document.getElementById(`${obj.name}Owned`).innerHTML = `owned: ${obj.owned}`
+                document.getElementById(`${obj.name}Price`).innerHTML = `price: ${obj.price}`
+                document.getElementById(`${obj.name}Upgrade`).style = "background-color: rgb(90,90,90)"
+            }
+        }
+    })
 }
 
 const createUpgrades = (obj) => {
@@ -98,13 +141,13 @@ const createUpgrades = (obj) => {
 
     let ownedParagraph = document.createElement("p")
     ownedParagraph.id = `${obj.name}Owned`
-    ownedParagraph.innerHTML = "owned: 0"
+    ownedParagraph.innerHTML = `owned: ${obj.owned}`
     div.appendChild(ownedParagraph)
 
     let buyButton = document.createElement("button")
     buyButton.innerHTML = "Buy"
     buyButton.onclick = function () {
-        buyAction(obj)
+        buyAction(obj.name)
         return false
     }
     div.appendChild(buyButton)
@@ -112,9 +155,18 @@ const createUpgrades = (obj) => {
     document.getElementsByClassName("upgradeBar")[0].appendChild(div)
 }
 
+const exportSave = () => {
+    window.prompt("Copy the following data", JSON.stringify(session))
+}
 
-window.onload = () => {
-    upgrades.forEach(element => {
-        createUpgrades(element)
-    })
+const importSave = () => {
+    let data = window.prompt("Paste in the exported data")
+    let newSession = new Session()
+    newSession.fromJSON(JSON.parse(`${data}`))
+    for(let i = 0; i < newSession.upgrades.length; i++) {
+        let newUpgrade = new Upgrade()
+        newUpgrade.fromJSON(newSession.upgrades[i])
+        newSession.upgrades[i] = newUpgrade
+    }
+    session = newSession
 }
