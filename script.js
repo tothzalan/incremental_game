@@ -108,7 +108,7 @@ const changeText = () => {
 const buyAction = (objName) => {
     session.upgrades.forEach(obj => {
         if(obj.name == objName) {
-            if (session.cookies > obj.price) {
+            if (session.cookies >= obj.price) {
                 session.cookies -= obj.price
                 obj.price = Math.ceil(obj.price * 2.5)
                 obj.owned += 1
