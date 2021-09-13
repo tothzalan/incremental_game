@@ -161,13 +161,17 @@ const exportSave = () => {
 
 const importSave = () => {
     let data = window.prompt("Paste in the exported data")
-    data = atob(data)
-    let newSession = new Session()
-    newSession.fromJSON(JSON.parse(`${data}`))
-    for(let i = 0; i < newSession.upgrades.length; i++) {
-        let newUpgrade = new Upgrade()
-        newUpgrade.fromJSON(newSession.upgrades[i])
-        newSession.upgrades[i] = newUpgrade
+    if(data.trim().length == 0) {
+        alert("Please paste in something")
+    } else {
+        data = atob(data)
+        let newSession = new Session()
+        newSession.fromJSON(JSON.parse(`${data}`))
+        for(let i = 0; i < newSession.upgrades.length; i++) {
+            let newUpgrade = new Upgrade()
+            newUpgrade.fromJSON(newSession.upgrades[i])
+            newSession.upgrades[i] = newUpgrade
+        }
+        session = newSession
     }
-    session = newSession
 }
