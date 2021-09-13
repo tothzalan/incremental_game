@@ -1,10 +1,16 @@
-let session = new Session(0, 0, [new Upgrade("finger", 15, "autoclicks"), new Upgrade("grandma", 100, "bakes cookies"),
+const randomBakeryName = () => {
+    let names = ["Zsuzsi", "Erzsi", "Márton", "Ági", "Zalán", "Péter", "Zoli", "Dani", "Kristóf", "Lili"]
+    return names[Math.floor(Math.random() * names.length)]
+}
+
+let session = new Session(randomBakeryName(), 0, 0, [new Upgrade("finger", 15, "autoclicks"), new Upgrade("grandma", 100, "bakes cookies"),
     new Upgrade("factory", 1000, "produces cookies in large quantities"), new Upgrade("alchemy", 50000, "turns gold into cookies")])
 
 window.onload = () => {
     session.upgrades.forEach(element => {
         createUpgrades(element)
     })
+    changeText()
 }
 
 setInterval(() => {
@@ -26,9 +32,11 @@ const getCookie = () => {
 const changeText = () => {
     numberText = document.getElementById("numberOfCookies")
     cPsText = document.getElementById("cookiesPerSec")
+    bakeryName = document.getElementById("bakeryName")
 
     numberText.innerHTML = `you have ${session.cookies.toFixed(2)} cookies`
     cPsText.innerHTML = `cookies / second: ${session.cps.toFixed(2)}`
+    bakeryName.innerHTML = `${session.name}'s bakery`
 
     session.upgrades.forEach(obj => {
         document.getElementById(`${obj.name}Price`).innerHTML = `price: ${obj.price}`
@@ -106,5 +114,15 @@ const importSave = () => {
             newSession.upgrades[i] = newUpgrade
         }
         session = newSession
+    }
+}
+
+const changeName = () => {
+    let data = window.prompt("What should your bakery's name be?")
+    if(data.trim().length == 0) {
+        alert("Please enter something")
+    } else {
+        session.name = data
+        changeText()
     }
 }
