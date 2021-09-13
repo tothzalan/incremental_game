@@ -156,11 +156,12 @@ const createUpgrades = (obj) => {
 }
 
 const exportSave = () => {
-    window.prompt("Copy the following data", JSON.stringify(session))
+    window.prompt("Copy the following data", btoa(JSON.stringify(session)))
 }
 
 const importSave = () => {
     let data = window.prompt("Paste in the exported data")
+    data = atob(data)
     let newSession = new Session()
     newSession.fromJSON(JSON.parse(`${data}`))
     for(let i = 0; i < newSession.upgrades.length; i++) {
