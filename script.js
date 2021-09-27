@@ -18,7 +18,7 @@ setInterval(() => {
     changeText()
 }, 1000)
 
-let cookieImage = false;
+let cookieImage = false
 const getCookie = () => {
     if (cookieImage)
         document.getElementById("cookieImage").src = "img/cookie.png"
@@ -41,8 +41,13 @@ const changeText = () => {
     session.upgrades.forEach(obj => {
         document.getElementById(`${obj.name}Price`).innerHTML = `price: ${obj.price}`
         document.getElementById(`${obj.name}Owned`).innerHTML = `owned: ${obj.owned}`
-        if (session.cookies >= obj.price)
-            document.getElementById(`${obj.name}Upgrade`).style = "background-color: gray"
+        if (session.cookies >= obj.price) {
+            document.getElementById(`${obj.name}Upgrade`).style = "background-color: gray;"
+            let childNodes = document.getElementById(`${obj.name}Upgrade`).childNodes
+            childNodes.forEach(node => {
+                node.style = "color: #32612D; font-weight: 800"
+            })
+        }
     })
 }
 
@@ -56,7 +61,11 @@ const buyAction = (objName) => {
                 session.cps += obj.price / 10
                 document.getElementById(`${obj.name}Owned`).innerHTML = `owned: ${obj.owned}`
                 document.getElementById(`${obj.name}Price`).innerHTML = `price: ${obj.price}`
-                document.getElementById(`${obj.name}Upgrade`).style = "background-color: rgb(90,90,90)"
+                document.getElementById(`${obj.name}Upgrade`).style = "background-color: rgb(90,90,90);" 
+                let childNodes = document.getElementById(`${obj.name}Upgrade`).childNodes
+                childNodes.forEach(node => {
+                    node.style = "color: yellow; font-weight: 400"
+                })
             }
         }
     })
