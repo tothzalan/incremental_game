@@ -1,4 +1,4 @@
-class Upgrade {
+class Building {
     constructor(name, price, description) {
         this._name = name
         this._price = price

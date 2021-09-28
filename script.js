@@ -3,12 +3,12 @@ const randomBakeryName = () => {
     return names[Math.floor(Math.random() * names.length)]
 }
 
-let session = new Session(randomBakeryName(), 0, 0, [new Upgrade("finger", 15, "autoclicks"), new Upgrade("grandma", 100, "bakes cookies"),
-    new Upgrade("factory", 1000, "produces cookies in large quantities"), new Upgrade("alchemy", 50000, "turns gold into cookies")])
+let session = new Session(randomBakeryName(), 0, 0, [new Building("finger", 15, "autoclicks"), new Building("grandma", 100, "bakes cookies"),
+    new Building("factory", 1000, "produces cookies in large quantities"), new Building("alchemy", 50000, "turns gold into cookies")])
 
 window.onload = () => {
-    session.upgrades.forEach(element => {
-        createUpgrades(element)
+    session.buildings.forEach(building => {
+        createBuildings(building)
     })
     changeText()
 }
@@ -38,12 +38,12 @@ const changeText = () => {
     cPsText.innerHTML = `cookies / second: ${session.cps.toFixed(2)}`
     bakeryName.innerHTML = `${session.name}'s bakery`
 
-    session.upgrades.forEach(obj => {
+    session.buildings.forEach(obj => {
         document.getElementById(`${obj.name}Price`).innerHTML = `price: ${obj.price}`
         document.getElementById(`${obj.name}Owned`).innerHTML = `owned: ${obj.owned}`
         if (session.cookies >= obj.price) {
-            document.getElementById(`${obj.name}Upgrade`).style = "background-color: gray;"
-            let childNodes = document.getElementById(`${obj.name}Upgrade`).childNodes
+            document.getElementById(`${obj.name}Building`).style = "background-color: gray;"
+            let childNodes = document.getElementById(`${obj.name}Building`).childNodes
             childNodes.forEach(node => {
                 node.style = "color: #32612D; font-weight: 800"
             })
@@ -52,7 +52,7 @@ const changeText = () => {
 }
 
 const buyAction = (objName) => {
-    session.upgrades.forEach(obj => {
+    session.buildings.forEach(obj => {
         if(obj.name == objName) {
             if (session.cookies >= obj.price) {
                 session.cookies -= obj.price
@@ -61,8 +61,8 @@ const buyAction = (objName) => {
                 session.cps += obj.price / 10
                 document.getElementById(`${obj.name}Owned`).innerHTML = `owned: ${obj.owned}`
                 document.getElementById(`${obj.name}Price`).innerHTML = `price: ${obj.price}`
-                document.getElementById(`${obj.name}Upgrade`).style = "background-color: rgb(90,90,90);" 
-                let childNodes = document.getElementById(`${obj.name}Upgrade`).childNodes
+                document.getElementById(`${obj.name}Building`).style = "background-color: rgb(90,90,90);" 
+                let childNodes = document.getElementById(`${obj.name}Building`).childNodes
                 childNodes.forEach(node => {
                     node.style = "color: yellow; font-weight: 400"
                 })
@@ -71,10 +71,10 @@ const buyAction = (objName) => {
     })
 }
 
-const createUpgrades = (obj) => {
+const createBuildings = (obj) => {
     let div = document.createElement("div")
-    div.classList.add("upgradeItem")
-    div.id = `${obj.name}Upgrade`
+    div.classList.add("buildingItem")
+    div.id = `${obj.name}Building`
 
     let nameParagraph = document.createElement("p")
     nameParagraph.innerHTML = obj.name
@@ -102,7 +102,7 @@ const createUpgrades = (obj) => {
     }
     div.appendChild(buyButton)
 
-    document.getElementsByClassName("upgradeBar")[0].appendChild(div)
+    document.getElementsByClassName("buildingBar")[0].appendChild(div)
 }
 
 const exportSave = () => {
@@ -117,10 +117,10 @@ const importSave = () => {
         data = atob(data)
         let newSession = new Session()
         newSession.fromJSON(JSON.parse(`${data}`))
-        for(let i = 0; i < newSession.upgrades.length; i++) {
-            let newUpgrade = new Upgrade()
-            newUpgrade.fromJSON(newSession.upgrades[i])
-            newSession.upgrades[i] = newUpgrade
+        for(let i = 0; i < newSession.buildings.length; i++) {
+            let newBuilding = new Building()
+            newBuilding.fromJSON(newSession.buildings[i])
+            newSession.buildings[i] = newBuilding
         }
         session = newSession
     }

@@ -1,9 +1,9 @@
 class Session {
-    constructor(name, cookies, cps, upgrades) {
+    constructor(name, cookies, cps, buildings) {
         this._name = name
         this._cookies = cookies
         this._cps = cps
-        this._upgrades = upgrades
+        this._buildings = buildings 
     }
     get name() {
         return this._name
@@ -23,16 +23,16 @@ class Session {
     set cps(cps) {
         this._cps = cps
     }
-    get upgrades() {
-        return this._upgrades
+    get buildings() {
+        return this._buildings
     }
-    set upgrades(upgrades) {
-        this._upgrades = upgrades
+    set buildings(buildings) {
+        this._buildings = buildings 
     }
     fromJSON(obj) {
         this._name = obj._name
         this._cookies = obj._cookies
         this._cps = obj._cps
-        this._upgrades = obj._upgrades
+        this._buildings = obj._buildings
     }
 }
