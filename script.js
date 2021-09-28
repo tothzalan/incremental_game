@@ -135,3 +135,10 @@ const changeName = () => {
         changeText()
     }
 }
+
+const resetProgress = () => {
+    if(window.confirm("Do you really want to reset?")) {
+        session = new Session(session.name, 0, 0, [new Building("finger", 15, "autoclicks"), new Building("grandma", 100, "bakes cookies"),
+            new Building("factory", 1000, "produces cookies in large quantities"), new Building("alchemy", 50000, "turns gold into cookies")])
+    }
+}
