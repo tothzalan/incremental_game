@@ -159,3 +159,15 @@ const resetProgress = () => {
         localStorage.clear()
     }
 }
+
+let buildingsHidden = false
+const toggleBuildings = () => {
+    document.getElementsByClassName("buildingBar")[0].style = `display: ${buildingsHidden ? "visible" : "none"}`
+    buildingsHidden = !buildingsHidden
+}
+
+let statsHidden = false 
+const toggleStats = () => {
+    document.getElementsByClassName("statsBar")[0].style = `display: ${statsHidden ? "visible" : "none"}`
+    statsHidden = !statsHidden
+}

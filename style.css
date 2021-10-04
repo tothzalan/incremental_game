@@ -21,6 +21,10 @@ main {
 #cookieImage {
     height: 125px;
 }
+.menuToggles {
+    text-align: center;
+    margin: 2em;
+}
 .buildingBar {
     width: 50vw;
     margin: 0 auto;
@@ -37,6 +41,10 @@ main {
 }
 .buildingItem p{
     color: yellow;
+}
+.statsBar {
+    width: 60vw;
+    margin: 0 auto;
 }
 
 @media screen and (max-width: 1100px) {
