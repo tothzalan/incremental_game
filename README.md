@@ -5,10 +5,10 @@ Basic cookie clicker game written in JavaScript.
 * Clicking on a cookie will result in a increase of cookies 
 * Different purchasable upgrades
 * Save files
+* Saving data to localStorage
 
 ## TODO:
 * Finding balance 
-* Saving data to localStorage
 * Achievements
 * Shiny animations
 * Statistics
